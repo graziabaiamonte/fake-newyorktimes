@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/fake-newyorktimes/static/css/main.a2d12866.css",
-    "main.js": "/fake-newyorktimes/static/js/main.240d5a09.js",
+    "main.css": "/fake-newyorktimes/static/css/main.6dd45707.css",
+    "main.js": "/fake-newyorktimes/static/js/main.57c15524.js",
     "index.html": "/fake-newyorktimes/index.html",
-    "main.a2d12866.css.map": "/fake-newyorktimes/static/css/main.a2d12866.css.map",
-    "main.240d5a09.js.map": "/fake-newyorktimes/static/js/main.240d5a09.js.map"
+    "main.6dd45707.css.map": "/fake-newyorktimes/static/css/main.6dd45707.css.map",
+    "main.57c15524.js.map": "/fake-newyorktimes/static/js/main.57c15524.js.map"
   },
   "entrypoints": [
-    "static/css/main.a2d12866.css",
-    "static/js/main.240d5a09.js"
+    "static/css/main.6dd45707.css",
+    "static/js/main.57c15524.js"
   ]
 }
