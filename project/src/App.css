@@ -1,0 +1,11 @@
+.box-articles-home {
+    display: flex;
+}
+
+@media screen and (max-width: 768px) {
+    .box-articles-home {
+        display: flex;
+        flex-direction: column;
+    }
+    
+}

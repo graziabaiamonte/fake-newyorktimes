@@ -1,0 +1,24 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Texturina:opsz,wght@12..72,700&display=swap');
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 150px;
+    top: 0;
+    border-bottom: 1px solid;
+    padding: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+h1 {
+    font-family: 'Texturina', serif;
+}
+
+@media screen and (max-width: 768px){
+    .header {
+        flex-direction: column-reverse;
+    }
+}

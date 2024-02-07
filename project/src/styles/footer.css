@@ -1,0 +1,19 @@
+.footer {
+    bottom: 0;
+    padding: 20px;
+    background-color: rgb(216, 216, 216);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'Tinos', serif;
+}
+
+p {
+    font-size: 14px;
+}
+
+@media screen and (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+    }
+}
