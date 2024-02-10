@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../styles/articlesHome.css';
+import './articlesHome.css';
+const apiKey = process.env.REACT_APP_API_KEY;
 
 function ArticleHome({ searchFunction, searchTerm }) {
     const [articles, setArticles] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
+    const [loading, setLoading] = useState(true); 
     const articlesPerPage = 6;
+    
+
 
     useEffect(() => {
+        setLoading(true); 
         if (searchTerm) {
             handleSearch(searchTerm);
         } else {
@@ -22,7 +27,7 @@ function ArticleHome({ searchFunction, searchTerm }) {
                 'https://api.nytimes.com/svc/topstories/v2/home.json',
                 {
                     params: {
-                        'api-key': 'Sixb74KeLAPkbmTX8DGohGzAYyAqAAa5',
+                        'api-key': apiKey,
                     },
                 }
             );
@@ -30,17 +35,21 @@ function ArticleHome({ searchFunction, searchTerm }) {
             setTotalPages(Math.ceil(response.data.results.length / articlesPerPage));
         } catch (error) {
             console.error('Errore nel recupero degli articoli:', error);
+        } finally {
+            setLoading(false); 
         }
     };
 
     const handleSearch = async (searchTerm) => {
         try {
-            const response = await axios.get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchTerm}&api-key=Sixb74KeLAPkbmTX8DGohGzAYyAqAAa5`);
+            const response = await axios.get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchTerm}&api-key=${apiKey}`);
             setArticles(response.data.response.docs);
             setTotalPages(Math.ceil(response.data.response.docs.length / articlesPerPage));
-            setCurrentPage(1); // Resettare la pagina corrente quando viene avviata una nuova ricerca
+            setCurrentPage(1);
         } catch (error) {
             console.error('Error fetching articles:', error);
+        } finally {
+            setLoading(false); 
         }
     };
 
@@ -55,6 +64,7 @@ function ArticleHome({ searchFunction, searchTerm }) {
 
     return (
         <div className='article-home'>
+            {loading && <div className="loader">Loading...</div>} 
             {currentArticles.map((article, index) => (
                 <div className='box-articles' key={index}>
                     <div className='text-article'>
@@ -68,6 +78,7 @@ function ArticleHome({ searchFunction, searchTerm }) {
                         </a>
                         <p>{article.abstract}</p>
                     </div>
+                    
                     {article.multimedia.length > 0 && (
                         <img
                             className='img-article'

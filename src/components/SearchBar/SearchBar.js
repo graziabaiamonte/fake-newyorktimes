@@ -1,29 +1,31 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import '../styles/search.css';
+import './search.css';
+const apiKey = process.env.REACT_APP_API_KEY;
 
 function SearchBar({ onSearch }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [articlesSearched, setArticlesSearched] = useState([]);
     const [displayedArticles, setDisplayedArticles] = useState([]);
-    const [showResults, setShowResults] = useState(false); // Stato per la visibilità dei risultati
+    const [showResults, setShowResults] = useState(false);
+    const [loading, setLoading] = useState(false); 
 
     const searchResultsRef = useRef(null);
 
-    const apiKey = 'Sixb74KeLAPkbmTX8DGohGzAYyAqAAa5';
-
     const handleSearch = async () => {
+        setLoading(true); 
         try {
             const response = await axios.get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchTerm}&api-key=${apiKey}`);
             setArticlesSearched(response.data.response.docs);
             setDisplayedArticles(response.data.response.docs.slice(0, 3));
-            setShowResults(true); // Mostra i risultati quando si effettua una ricerca
-            
+            setShowResults(true);
+            setLoading(false); 
             if (searchResultsRef.current) {
                 searchResultsRef.current.scrollTop = 0;
             }
         } catch (error) {
             console.error('Error fetching articles:', error);
+            setLoading(false); 
         }
     };
 
@@ -41,7 +43,7 @@ function SearchBar({ onSearch }) {
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (searchResultsRef.current && !searchResultsRef.current.contains(event.target)) {
-                setShowResults(false); // Chiudi i risultati quando si clicca al di fuori del div dei risultati
+                setShowResults(false);
             }
         };
 
@@ -60,15 +62,15 @@ function SearchBar({ onSearch }) {
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    onKeyDown={handleKeyDown} 
+                    onKeyDown={handleKeyDown}
                     placeholder="SEARCH"
                 />
                 <button className='input-button' onClick={handleSearch}>Go</button>
             </div>
 
-            
             {showResults && (
                 <div className='search-results' ref={searchResultsRef}>
+                    {loading && <div className="loader">Loading...</div>} 
                     {displayedArticles.map((article, index) => (
                         <div key={index}>
                             <a href={article.web_url} target="_blank" rel="noopener noreferrer">

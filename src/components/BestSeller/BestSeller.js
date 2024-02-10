@@ -1,34 +1,35 @@
 import React , { useState, useEffect } from "react";
 import axios from 'axios';
-import '../styles/bestSeller.css';
+import './bestSeller.css';
+const apiKey = process.env.REACT_APP_API_KEY;
 
 function BestSeller () {
     const [articles, setArticles] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
-   
+    const [loading, setLoading] = useState(true); 
+
     useEffect(() => {
+        setLoading(true); 
         const fetchArticles = async () => {
           try {
             const response = await axios.get(
-              'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=Sixb74KeLAPkbmTX8DGohGzAYyAqAAa5',
-              
+              `https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=${apiKey}`,
             );
+            
             setArticles(response.data.results.books);
-  } catch (error) {
-    if (error.response.status === 429) {
-      
-      setTimeout(fetchArticles, 5000); 
-    } else {
-      console.error('Errore nel recupero degli articoli:', error);
-    }
-  }
-};
+          } catch (error) {
+            if (error.response.status === 429) {
+              setTimeout(fetchArticles, 5000); 
+            } 
+          } finally {
+            setLoading(false); 
+          }
+        };
         fetchArticles();
       }, []);
- 
-      const handleNextPage = () => {
+
+    const handleNextPage = () => {
         setCurrentPage(currentPage + 1);
-        
     };
 
     const handlePreviousPage = () => {
@@ -38,6 +39,7 @@ function BestSeller () {
     
     return (
         <div className="bestseller">
+            {loading && <div className="loader">Loading...</div>} 
             <h3>Best Seller</h3>
             {articles.slice(currentPage * 2, currentPage * 2 + 2).map((article, index) => (
                 <div className="box-bestseller" key={index}>
@@ -69,4 +71,4 @@ function BestSeller () {
     )
 }
 
-export default BestSeller;
+export default BestSeller;     

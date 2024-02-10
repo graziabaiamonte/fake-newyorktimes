@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import '../styles/header.css';
-import SearchBar from './SearchBar';
+import './header.css';
+import SearchBar from '../SearchBar/SearchBar';
 
 function Header () {
-
     const [articles, setArticles] = useState([]);
     const handleSearchResult = (articles) => {
         setArticles(articles);
