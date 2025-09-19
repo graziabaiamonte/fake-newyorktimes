@@ -1,6 +1,8 @@
 ##  📰 New York Times Clone
 Project - Start2Impact React course
+
 Visit the [demo](https://graziabaiamonte.github.io/fake-newyorktimes/)
+
 
 ### 🚀 Tech Stack
 - React
