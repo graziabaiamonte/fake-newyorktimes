@@ -1,5 +1,5 @@
 ##   New York Times clone
-This project represents an exercise for the Start2Impact React course.
+Project - Start2Impact React course
 
 API used: https://developer.nytimes.com/get-started 
 
